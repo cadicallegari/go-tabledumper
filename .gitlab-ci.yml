@@ -1,0 +1,19 @@
+job-analyze:
+  stage: test
+  script:
+   - make analyze
+
+job-check:
+  stage: test
+  script:
+    - make check
+
+job-check-integration:
+  stage: test
+  script:
+    - make check-integration
+
+job-clean:
+  stage: test
+  script:
+    - make cleanup

@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespasswd
+      - POSTGRES_DB=dumper_test
+    volumes:
+    - ./tests/schemas/:/docker-entrypoint-initdb.d/
+
+  tabledumperdev:
+    working_dir: /go/src/tabledumper
+    build:
+      context: .
+      dockerfile: ./hack/Dockerfile.dev
+    volumes:
+      - .:/go/src/tabledumper/
+      - ./tests/reference_files/:/reference_files
+      - ./tmp/:/tmp
+    depends_on:
+      - db
